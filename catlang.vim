@@ -36,11 +36,12 @@ syn match TypeIdentifier "\<\w\+\>" contained
 " Pointer types (e.g., *char, *int)
 syn match TypePtr "\*" contained nextgroup=TypeIdentifier
 " Array types (e.g., [10]int, [5]float)
-syn match TypeArray "\[.\+\]" contained contains=cNumber nextgroup=TypeIdentifier
+syn match TypeArray "\[[0-9]\+\]" contained contains=cNumber nextgroup=TypeIdentifier
 " Struct and tuple types (e.g., {.name: *char, .age: int})
 syn region TypeBlock start=/{/ end=/}/ contained contains=TypeExpr
 " Type expressions (e.g., : int, : *char, : {.name: *char})
-syn match TypeExpr ":\s*\zs" nextgroup=TypeIdentifier,TypePtr,TypeArray,TypeBlock
+syn match TypeExpr "" contained nextgroup=TypeIdentifier,TypePtr,TypeArray,TypeBlock
+syn match Colon ":\s*" nextgroup=TypeExpr
 
 " Function calls
 syn match Function "\<\w\+\>\s*\ze(.*)"
@@ -56,6 +57,7 @@ hi def link Typedef Typedef
 hi def link Operator Operator
 hi def link As Operator
 hi def link Comment Comment
+hi def link Colon Typnfe
 hi def link TypeIdentifier Type
 hi def link TypePtr Type
 hi def link TypeArray Type
